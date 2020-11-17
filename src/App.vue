@@ -17,6 +17,9 @@
         <div class="invalid-feedback" v-if="!$v.email.email">
           This field should be filled with email
         </div>
+        <div class="invalid-feedback" v-if="!$v.email.uniqieEmail">
+          This email is already registered
+        </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -65,6 +68,16 @@ export default {
     email: {
       required,
       email,
+      uniqueEmail: function (newEmail) {
+        if (newEmail === "") return true;
+        return new Promise((resolvse) => {
+          //(resolve,reject)
+          setTimeout(() => {
+            const value = newEmail !== "test@mail.ru";
+            resolvse(value);
+          }, 3000);
+        });
+      },
     },
     password: {
       minLength: minLength(6),
