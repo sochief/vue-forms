@@ -3,18 +3,33 @@
     <form class="pt-3">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" v-model="email">
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          @blur="$v.email.$touch()"
+          v-model="email"
+        />
       </div>
     </form>
+    <pre>    {{ $v.email }}</pre>
   </div>
 </template>
 
 <script>
+import { required, email } from "vuelidate/lib/validators";
 export default {
-  data(){
-    return{
-      email:''
-    }}
+  data() {
+    return {
+      email: "",
+    };
+  },
+  validations: {
+    email: {
+      required,
+      email,
+    },
+  },
 };
 </script>
 
